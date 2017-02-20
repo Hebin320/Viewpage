@@ -10,19 +10,19 @@ import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity {
 
-    ViewPager vpMain;
+    MyViewpager vpMain;
     LinearLayout llPoint;
-    private int[] img = {R.mipmap.ic_vp_01, R.mipmap.ic_vp_02,R.mipmap.ic_vp_03};
+    private int[] img = {R.mipmap.ic_vp_01, R.mipmap.ic_vp_02, R.mipmap.ic_vp_03};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        vpMain = (ViewPager) findViewById(R.id.vp_main);
+        vpMain = (MyViewpager) findViewById(R.id.vp_main);
         llPoint = (LinearLayout) findViewById(R.id.ll_point);
         ArrayList<Fragment> list = new ArrayList<>();
         ImgFragment imgFragment;
-        imgFragment = ImgFragment.newInstance(img[img.length-1]);
+        imgFragment = ImgFragment.newInstance(img[img.length - 1]);
         list.add(imgFragment);
         for (int i = 0; i < img.length; i++) {
             imgFragment = ImgFragment.newInstance(img[i]);
@@ -30,11 +30,12 @@ public class MainActivity extends FragmentActivity {
         }
         imgFragment = ImgFragment.newInstance(img[0]);
         list.add(imgFragment);
-        VpAdapter adapter = new VpAdapter(getSupportFragmentManager(), list);
-        vpMain.setAdapter(adapter);
-        vpMain.setOffscreenPageLimit(img.length - 1);
-        vpMain.setCurrentItem(1);
-        vpMain.addOnPageChangeListener(new VpListener(VpListener.getImageViews(this,llPoint,list),vpMain,800));
+        //第一个Viewpager
+        vpMain.setPoint(llPoint, R.drawable.gray_circle, R.drawable.color_circle);
+        vpMain.setFm(getSupportFragmentManager());
+        vpMain.setTime(800);
+        vpMain.setFragment(list);
+
     }
 
 
